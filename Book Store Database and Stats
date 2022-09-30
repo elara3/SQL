@@ -1,0 +1,27 @@
+CREATE TABLE book_store (id INTEGER PRIMARY KEY, name TEXT, stock INTEGER, Sold INTEGER, avergae_rating INTEGER);
+
+INSERT INTO book_store VALUES 
+(1, "Shadow of the Wind", 7, 5, 5.0),
+(2, "The Distance Between Us", 5, 3, 4.5),
+(3, "Dominicana", 3, 3, 4.5),
+(4, "Women Hollering Creek", 5, 2, 3.0),
+(5, "Stiff", 1, 0, 2.0),
+(6, "Hamnet", 4, 2, 3.0),
+(7, "The Story of The Lost Child", 4, 3, 5.0),
+(8, "The Night Circus", 4, 4, 5.0),
+(9, "Vicious", 2, 1, 4.5),
+(10, "Vengeful", 4, 1, 4.5),
+(11, "The Starless Sea", 4, 1, 5.0),
+(12, "How The Grinch Stole Christmas", 2, 1, 5.0),
+(13, "Belvue Hospital", 5, 3, 5.0),
+(14, "Elderhood", 4, 1, 3.0),
+(15, "The Man Who Mistook His Wife For A Hat", 5, 2, 4.0),
+(16, "Woman Hollering Creek", 3, 2, 3.0),
+(17, "The Seven Husbands of Evalyn Hugo", 3, 3, 5.0);
+
+SELECT * FROM book_store;
+
+SELECT * FROM book_store 
+  ORDER BY sold desc;
+
+SELECT name sold FROM book_store;

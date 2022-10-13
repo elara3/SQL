@@ -1,0 +1,62 @@
+CREATE TABLE persons (id INTEGER PRIMARY KEY AUTOINCREMENT, fullname TEXT, age INTEGER);
+
+INSERT INTO persons (fullname, age) VALUES ('Mila Kunis', '38');
+INSERT INTO persons (fullname, age) VALUES ('Blake Lively', '34');
+INSERT INTO persons (fullname, age) VALUES ('Ashton Kutcher', '45');
+INSERT INTO persons (fullname, age) VALUES ('Ryan Renolds', '46');
+INSERT INTO persons (fullname, age) VALUES ('Angelique Boyer', '33');
+INSERT INTO persons (fullname, age) VALUES ('Sebastian RUlly', '48');
+
+
+CREATE TABLE hobbies (id INTEGER PRIMARY KEY AUTOINCREMENT, person_id INTEGER, name TEXT);
+
+INSERT INTO hobbies (person_id, name) VALUES (1, 'hiking');
+INSERT INTO hobbies (person_id, name) VALUES (1, 'reading');
+INSERT INTO hobbies (person_id, name) VALUES (2, 'drawing');
+INSERT INTO hobbies (person_id, name) VALUES (2, 'dancing');
+INSERT INTO hobbies (person_id, name) VALUES (3, 'coding');
+INSERT INTO hobbies (person_id, name) VALUES (3, 'biking');
+INSERT INTO hobbies (person_id, name) VALUES (4, 'dilly-dallying');
+INSERT INTO hobbies (person_id, name) VALUES (5, 'reading');
+INSERT INTO hobbies (person_id, name) VALUES (6, 'gym');
+
+
+CREATE TABLE orders (id INTEGER PRIMARY KEY AUTOINCREMENT, customer_id INTEGER, item TEXT, price INTEGER);
+
+INSERT INTO orders (customer_id, item, price) VALUES (1, 'Rumba', 1000);
+INSERT INTO orders (customer_id, item, price) VALUES (3, 'High powered screwdriver', 500);
+INSERT INTO orders (customer_id, item, price) VALUES (4, 'couch', 1500);
+INSERT INTO orders (customer_id, item, price) VALUES (6, 'washer', 2000);
+
+
+CREATE TABLE spouse (id INTEGER PRIMARY KEY AUTOINCREMENT, person1_id INTEGER, person2_id INTEGER);
+
+INSERT INTO spouse (person1_id, person2_id) VALUES (1, 3);
+INSERT INTO spouse (person1_id, person2_id) VALUES (2, 4);
+INSERT INTO spouse (person1_id, person2_id) VALUES (5, 6);
+
+=====================END TABLES=========================================*/
+
+/*For each start what are thie hobbies*/
+SELECT persons.fullname AS 'stars', hobbies.name AS 'hobbies' FROM persons
+    JOIN hobbies
+    ON persons.id = hobbies.person_id;
+    
+/*Retrieve the hobbies of Milan Kunis*/
+SELECT persons.fullname AS 'Milla Kunis', hobbies.name AS 'hobbies' FROM persons
+    JOIN hobbies
+    ON persons.id = hobbies.person_id
+    WHERE persons.fullname = 'Mila Kunis';
+
+/*What are the pruchases of each start*/
+SELECT persons.fullname AS 'customer', orders.price AS 'purchase price' FROM persons
+    LEFT JOIN orders
+    ON persons.id = orders.customer_id
+    ORDER BY orders.price desc;
+ 
+/*Link the spouse of each star*/
+SELECT a.fullname AS 'successful women', b.fullname AS 'spouse' FROM spouse
+    JOIN persons a
+    ON spouse.person1_id = a.id
+    JOIN persons b
+    ON spouse.person2_id = b.id;

@@ -2,17 +2,19 @@
 
 #1. How many orders were placed in January?
 SELECT COUNT(*) 
-	FROM BIT_DB.JanSales 	
+	FROM BIT_DB.JanSales;
+		OR
 SELECT COUNT(orderid) 
-	FROM BIT_DB.JanSales
-
+	FROM BIT_DB.JanSales;
+	
 2. How many of those orders were for an iPhone?
 SELECT COUNT(*) 
 	FROM BIT_DB.JanSales
-    WHERE product = 'iPhone'			
+	WHERE product = 'iPhone';	
+		OR
 SELECT COUNT(orderid)
 	FROM BIT_DB.JanSales
-	WHERE Product='iPhone'
+	WHERE Product='iPhone';
 
 3. Select the customer account numbers for all the orders that were placed in February.*/
 SELECT acctnum 
@@ -24,19 +26,19 @@ SELECT acctnum
 SELECT distinct product, price 		
 	FROM BIT_DB.jansales
     ORDER BY price asc LIMIT 1;	
-
+		OR
 SELECT distinct Product, price
 	FROM BIT_DB.JanSales
-	WHERE  price IN (SELECT min(price) FROM BIT_DB.JanSales)
+	WHERE  price IN (SELECT min(price) FROM BIT_DB.JanSales);
 
 5. What is the total revenue for each product sold in January? (Revenue can be calculated using the number of products sold and the price of the products).*/
-SELECT distinct product, SUM(quantity)*price AS revenue
+SELECT distinct product, SUM(quantity*price) AS revenue
     FROM BIT_DB.JanSales
     GROUP BY product
     ORDER BY price asc;
 
 6. Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue?*/
-SELECT product, SUM(quantity) AS quantity, SUM(quantity)*price AS revenue
+SELECT product, SUM(quantity) AS quantity, SUM(quantity*price) AS revenue
      FROM BIT_DB.febsales
     WHERE location = '548 Lincoln St, Seattle, WA 98101';
 
@@ -45,25 +47,62 @@ SELECT COUNT(cust.acctnum) AS customer, AVG(quantity*price) AS average_cust_spen
     FROM BIT_DB.FebSales feb
     INNER JOIN BIT_DB.customers cust
     ON feb.orderid = cust.order_id
-    WHERE quantity > 2
+    WHERE quantity > 2;
 
 8. Orders mades between 2/13 and 2/18?
 SELECT orderdate
-FROM BIT_DB.FebSales
-WHERE orderdate between '02/13/19 00:00' AND '02/18/19 00:00'
+	FROM BIT_DB.FebSales
+	WHERE orderdate between '02/13/19 00:00' AND '02/18/19 00:00';
 
 9. All orders made on 2/18 at 1:35?
 SELECT location
-FROM BIT_DB.FebSales 
-WHERE orderdate = '02/18/19 01:35'
+	FROM BIT_DB.FebSales 
+	WHERE orderdate = '02/18/19 01:35';
 
 10. The total amount of orders made on 2/18?
 SELECT sum(quantity)
-FROM BIT_DB.FebSales 
-WHERE orderdate like '%02/18/19%'
+	FROM BIT_DB.FebSales 
+	WHERE orderdate like '%02/18/19%';
 
 11. List all the products in Los Angeles in Feburary, and how many of each were sold?
 SELECT product, SUM(quantity), location 
     FROM BIT_DB.febsales
     WHERE location LIKE '%Los Angeles%'
     GROUP BY product;
+
+12. Which locations in New York received at least 3 orders in January, and how many orders did they each receive? (Hint: use HAVING).
+SELECT distinct location, count(orderID)
+	FROM BIT_DB.JanSales
+	WHERE location LIKE '%NY%'
+	GROUP BY location
+	HAVING count(orderID)>2;
+
+13. How many of each type of headphone were sold in February?
+SELECT product, SUM(quantity) AS quantity
+    FROM BIT_DB.febsales
+    WHERE product LIKE '%headphones%'
+    GROUP BY product;
+
+14. What was the average amount spent per account in February? 
+SELECT SUM(quantity*price)/COUNT(cust.acctnum) AS average_spent
+    FROM BIT_DB.febsales feb
+    LEFT JOIN BIT_DB.customers cust
+    ON cust.order_id = feb.orderid;
+		OR
+SELECT avg(quantity*price)
+	FROM BIT_DB.FebSales Feb
+	LEFT JOIN BIT_DB.customers cust
+	ON FEB.orderid=cust.order_id;
+
+15. What was the average quantity of products purchased per account in February? 
+SELECT SUM(quantity)/COUNT(cust.acctnum)
+    FROM BIT_DB.febsales feb
+    LEFT JOIN BIT_DB.customers cust
+    ON feb.orderid = cust.order_id;
+
+16. Which product brought in the most revenue in January and how much revenue did it bring in total?
+SELECT product, sum(quantity*price)
+    FROM BIT_DB.JanSales 
+    GROUP BY product
+    ORDER BY sum(quantity*price) desc 
+    LIMIT 1;

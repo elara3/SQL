@@ -1,0 +1,61 @@
+# For this project, I downloaded Spotify data from Kaggle.
+# Then I created a table to insert Spotify data into.
+# Finally, I performed analytics on the data using SQL. 
+
+#Creating the table: 
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness text NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL)
+
+1) What is the average danceability and energy by artist and track? 
+   SELECT track_name, artist_name, AVG(danceability) AS danceability, AVG(energy) AS energy
+    FROM BIT_DB.Spotifydata
+    GROUP BY track_name, artist_name;
+
+2) What artist released the longest song? 
+  SELECT track_name, artist_name, duration_ms
+    FROM BIT_DB.Spotifydata
+    ORDER BY duration_ms desc;
+
+  SELECT artist_name
+    FROM BIT_DB.Spotifydata
+    ORDER BY duration_ms desc LIMIT 1;
+
+3)What's the average danceability for the 10 ?
+  SELECT SUM(duration_ms)/COUNT(track_name)
+    FROM BIT_DB.Spotifydata
+    ORDER BY popularity desc LIMIT 10;
+
+4)Then I determined who the Top 10 artists are by popularity
+  SELECT artist_name
+    FROM BIT_DB.Spotifydata
+    ORDER BY popularity desc LIMIT 10
+
+5a) What is the average danceability? ANS 0.6857
+  SELECT AVG(danceability)
+	FROMBIT_DB.spotify;
+
+5b)Select all the artists that have a danceability above avg danceability*/
+  SELECT artist_name
+    FROM BIT_DB.spotifydata
+    WHERE danceability > (SELECT AVG(danceability) FROM BIT_DB. spotifydata);
+	
+  SELECT artist_name
+    FROM BIT_DB.spotifydata
+    WHERE danceability > (0.6857);

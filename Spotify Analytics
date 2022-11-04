@@ -60,9 +60,9 @@ time_signature integer NOT NULL)
     FROM BIT_DB.spotifydata
     WHERE danceability > (0.6857);
 
-6) Names of the none Top Stars
-WITH popularity_average_CTE AS (
-		SELECT s.artist_name, AVG(s.popularity) AS average_popularity
+6) Names of the nine Top Stars using CTE 
+WITH popularity_average_CTE AS 
+	(SELECT s.artist_name, AVG(s.popularity) AS average_popularity
 		FROM SpotifyData s 
 		GROUP BY s.artist_name)
  
